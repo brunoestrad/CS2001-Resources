@@ -1,25 +1,18 @@
-import { Outlet } from "react-router-dom";
-import Menu from "./Menu";
-import Weather from "./Weather";
+import { Outlet } from 'react-router-dom'
+import Menu from './Menu'
+import Sidebar from './Sidebar'
 
-function Layout(){
-    return(
-        <>
-            <Menu /> {/* Could also use code in Menu straight here but using this for cleaner visuals */}
-            <div className="container">
-                <aside className="sidebar">
-                    <input type="text" className="search" id="search" name="search" placeholder="Search"></input>
-                    <div>
-                        <Weather />
-                    </div>
-                </aside>
-                <main className="maincontent">
-                <Outlet /> {/* Adding Outlet within <div> and <main> in order to be
-                            shown in the main content rather than creating a new div */}
-                </main>   
-            </div>      
-        </>
-    )
+export default function Layout(){
+  return(
+    <>
+    <header></header>
+    <Menu/>
+    <div className="container">
+        <Sidebar/>
+        <main className="maincontent">
+            <Outlet/>
+        </main>
+    </div>
+    </>
+  )
 }
-
-export default Layout

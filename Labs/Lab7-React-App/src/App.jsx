@@ -1,28 +1,24 @@
 import './App.css'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Registration from './components/Registration'
+import Home from './components/Home'
+import Help from './components/Help'
+import Login from './components/Login'
 import Layout from './components/Layout'
-import Home from './pages/Home'
-import Help from './pages/Help'
-import Register from './pages/Register'
-import Login from './pages/Login'
 
 
 function App() {
-  
-
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout/>}>
-            <Route index element={<Home/>}/>
-            <Route path={"/register"} element={<Register/>}/>
-            <Route path={"/login"} element={<Login/>}/>
-            <Route path={"/help"} element={<Help/>}/>
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout/>}>
+          <Route index element={<Home/>}></Route>
+          <Route path={'/register'} element={<Registration/>}></Route>
+          <Route path={'/login'} element={<Login/>}></Route>
+          <Route path={'/help'} element={<Help/>}></Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
