@@ -66,7 +66,7 @@ export default function RegistrationControlled(){
 
         if(validateForm()){
             try{
-                const response = await axios.post('https://reqres.in/api/users', dataToSend);
+                const response = await axios.post('http://localhost:8080/user', dataToSend);
 
                 console.log(response);
                 if (response.status === 201) {
