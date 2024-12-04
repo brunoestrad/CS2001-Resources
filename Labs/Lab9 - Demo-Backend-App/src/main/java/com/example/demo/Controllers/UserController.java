@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +26,46 @@ public class UserController {
 	UserService userService;
     
     //Get All Users
-
+    @GetMapping("/user")
+    public List<User> getUsers(){
+        return userService.getUsers();
+    }
+    
     //Post a User
+    @PostMapping("/user")
+    public ResponseEntity<Optional<User>> addUser(@RequestBody UserPostDTO newUserDTO){
+        
+        if (newUserDTO.getName()==null ||
+            newUserDTO.getEmail()==null ||
+            newUserDTO.getPassword()==null || 
+            newUserDTO.getUserType() == UserType.NONE){
+                return new ResponseEntity<>(Optional.ofNullable(null), HttpStatus.BAD_REQUEST);
+            }
+
+        User newUser = new User(newUserDTO.getName(), newUserDTO.getEmail(),
+                        newUserDTO.getPassword(), newUserDTO.getUserType());
+        userService.addUser(newUser);
+        return new ResponseEntity<>(Optional.ofNullable(newUser), HttpStatus.CREATED);
+
+    }
     
     //Get User by ID
+    @GetMapping("/user/{id}")
+    public Optional<User> getUserById(@PathVariable(value = "id") long Id) {
+        return userService.findByID(Id);
+    }
     
     //Delete a User by ID
+    @DeleteMapping("/user/{id}")
+    public String deletUser(@PathVariable(value = "id") long Id) {
+        userService.deleteUser(Id);
+        return "User deleted";
+    }
     
     //Get User by Email
+    @GetMapping("/user/findByEmail")
+    public Optional<User> getUserByEmail(@RequestParam String email){
+        return Optional.ofNullable(userService.findByEmail(email));
+    }
    
 }
